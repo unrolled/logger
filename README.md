@@ -1,4 +1,4 @@
-# Logger [![GoDoc](https://godoc.org/github.com/unrolled/webapp/logger?status.svg)](http://godoc.org/github.com/unrolled/webapp/logger)
+# Logger [![GoDoc](https://godoc.org/github.com/unrolled/logger?status.svg)](http://godoc.org/github.com/unrolled/logger)
 
 Logger is an HTTP middleware for Go that logs web requests to an io.Writer (the default being `os.Stdout`. It's a standard net/http [Handler](http://golang.org/pkg/net/http/#Handler), and can be used with many frameworks or directly with Go's net/http package.
 
@@ -12,7 +12,7 @@ import (
     "log"
     "net/http"
 
-    "github.com/unrolled/webapp/logger"  // or "gopkg.in/unrolled/webapp/logger.v1"
+    "github.com/unrolled/logger"  // or "gopkg.in/unrolled/logger.v1"
 )
 
 var myHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +83,7 @@ import (
     "log"
     "net/http"
 
-    "github.com/unrolled/webapp/logger"  // or "gopkg.in/unrolled/webapp/logger.v1"
+    "github.com/unrolled/logger"  // or "gopkg.in/unrolled/logger.v1"
 )
 
 var myHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
