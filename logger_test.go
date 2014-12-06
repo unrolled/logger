@@ -3,6 +3,7 @@ package logger
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -132,6 +133,29 @@ func TestCustomPrefixWithNoBrackets(t *testing.T) {
 	expectContainsTrue(t, buf.String(), "GET")
 	expectContainsTrue(t, buf.String(), "testapp_-_yo2()")
 	expectContainsFalse(t, buf.String(), "[testapp_-_yo2()] ")
+}
+
+func TestCustomFlags(t *testing.T) {
+	buf := bytes.NewBufferString("")
+
+	r := New(Options{
+		OutputFlags: log.Lshortfile,
+		Out:         buf,
+	})
+
+	res := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/foo", nil)
+	r.Handler(myHandler).ServeHTTP(res, req)
+
+	expectContainsTrue(t, buf.String(), "200")
+	expectContainsTrue(t, buf.String(), "GET")
+
+	// Log should start with...
+	expectContainsTrue(t, buf.String()[0:10], "logger.go:")
+
+	// Should not include a date now.
+	curDate := time.Now().Format("2006/01/02")
+	expectContainsFalse(t, buf.String(), curDate)
 }
 
 func TestCustomFlagsZero(t *testing.T) {
