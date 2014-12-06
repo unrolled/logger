@@ -1,6 +1,6 @@
 # Logger [![GoDoc](https://godoc.org/github.com/unrolled/logger?status.svg)](http://godoc.org/github.com/unrolled/logger)
 
-Logger is an HTTP middleware for Go that logs web requests to an io.Writer (the default being `os.Stdout`. It's a standard net/http [Handler](http://golang.org/pkg/net/http/#Handler), and can be used with many frameworks or directly with Go's net/http package.
+Logger is an HTTP middleware for Go that logs web requests to an io.Writer (the default being `os.Stdout`). It's a standard net/http [Handler](http://golang.org/pkg/net/http/#Handler), and can be used with many frameworks or directly with Go's net/http package.
 
 ## Usage
 
@@ -32,14 +32,16 @@ func main() {
     http.ListenAndServe("0.0.0.0:3000", app)
 }
 ~~~
+
 A simple GET request to "/info/" will output:
 ~~~ bash
-  [MySampleWebApp] 2014/11/21 14:11:21 (12.34.56.78) "GET /info/ HTTP/1.1" 200 11 12.54µs
+[MySampleWebApp] 2014/11/21 14:11:21 (12.34.56.78) "GET /info/ HTTP/1.1" 200 11 12.54µs
 ~~~
+
 Here's a breakdown of what the values mean: `[SuppliedPrefix] Date Time (RemoteIP) "Method RequestURI Protocol" StatusCode Size Time`.
 Note that the `Date Time` is controlled by the output flags. See http://golang.org/pkg/log/#pkg-constants.
 
-Be sure to use the Logger middleware as the very first handler in the chain. This will ensure that your subsequent handlers (like recovery) will always be logged.
+Be sure to use the Logger middleware as the very first handler in the chain. This will ensure that your subsequent handlers (like [Recovery](http://github.com/unrolled/recovery)) will always be logged.
 
 ### Available Options
 Logger comes with a variety of configuration options (Note: these are not the default option values. See the defaults below.):
@@ -51,7 +53,7 @@ l := logger.New(logger.Options{
     DisableAutoBrackets: false, // DisableAutoBrackets if set to true, will remove the prefix and square brackets. Default is false.
     RemoteAddressHeaders: []string{"X-Forwarded-Proto"}, // RemoteAddressHeaders is a list of header keys that Logger will look at to determine the proper remote address. Useful when using a proxy like Nginx: `[]string{"X-Forwarded-Proto"}`. Default is an empty slice, and thus will use `reqeust.RemoteAddr`.
     Out: os.Stdout, // Out is the destination to which the logged data will be written too. Default is `os.Stdout`.
-    OutputFlags log.Ldate|log.Ltime, // OutputFlags defines the logging properties. See http://golang.org/pkg/log/#pkg-constants. To disable all flags, set this to `-1`. Defaults to log.LstdFlags (2009/01/23 01:23:23).
+    OutputFlags: log.Ldate | log.Ltime, // OutputFlags defines the logging properties. See http://golang.org/pkg/log/#pkg-constants. To disable all flags, set this to `-1`. Defaults to log.LstdFlags (2009/01/23 01:23:23).
 })
 // ...
 ~~~

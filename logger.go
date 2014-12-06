@@ -22,7 +22,7 @@ type Options struct {
 	OutputFlags int
 }
 
-// Logger is a middleware handler that logs a request. Outputted information includes status, method, URL, remote address, size, and the time it took to process the request.
+// Logger is a HTTP middleware handler that logs a request. Outputted information includes status, method, URL, remote address, size, and the time it took to process the request.
 type Logger struct {
 	*log.Logger
 	opt Options

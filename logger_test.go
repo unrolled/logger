@@ -151,7 +151,7 @@ func TestCustomFlags(t *testing.T) {
 	expectContainsTrue(t, buf.String(), "GET")
 
 	// Log should start with...
-	expectContainsTrue(t, buf.String()[0:10], "logger.go:")
+	expect(t, buf.String()[0:10], "logger.go:")
 
 	// Should not include a date now.
 	curDate := time.Now().Format("2006/01/02")
