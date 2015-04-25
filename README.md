@@ -1,4 +1,4 @@
-# Logger [![GoDoc](https://godoc.org/github.com/unrolled/logger?status.svg)](http://godoc.org/github.com/unrolled/logger)
+# Logger [![GoDoc](https://godoc.org/github.com/unrolled/logger?status.svg)](http://godoc.org/github.com/unrolled/logger) [![Build Status](https://travis-ci.org/unrolled/logger.svg)](https://travis-ci.org/unrolled/logger)
 
 Logger is an HTTP middleware for Go that logs web requests to an io.Writer (the default being `os.Stdout`). It's a standard net/http [Handler](http://golang.org/pkg/net/http/#Handler), and can be used with many frameworks or directly with Go's net/http package.
 
