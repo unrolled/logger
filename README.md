@@ -22,7 +22,7 @@ var myHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 func main() {
     loggerWithConfigMiddleware := logger.New(logger.Options{
         Prefix: "MySampleWebApp",
-        RemoteAddressHeaders: []string{"X-Forwarded-Proto"},
+        RemoteAddressHeaders: []string{"X-Forwarded-For"},
         OutputFlags: log.LstdFlags,
     })
 
@@ -51,7 +51,7 @@ Logger comes with a variety of configuration options (Note: these are not the de
 l := logger.New(logger.Options{        
     Prefix: "myApp", // Prefix is the outputted keyword in front of the log message. Logger automatically wraps the prefix in square brackets (ie. [myApp] ) unless the `DisableAutoBrackets` is set to true. A blank value will not have brackets added. Default is blank (with no brackets).
     DisableAutoBrackets: false, // DisableAutoBrackets if set to true, will remove the prefix and square brackets. Default is false.
-    RemoteAddressHeaders: []string{"X-Forwarded-Proto"}, // RemoteAddressHeaders is a list of header keys that Logger will look at to determine the proper remote address. Useful when using a proxy like Nginx: `[]string{"X-Forwarded-Proto"}`. Default is an empty slice, and thus will use `reqeust.RemoteAddr`.
+    RemoteAddressHeaders: []string{"X-Forwarded-For"}, // RemoteAddressHeaders is a list of header keys that Logger will look at to determine the proper remote address. Useful when using a proxy like Nginx: `[]string{"X-Forwarded-For"}`. Default is an empty slice, and thus will use `reqeust.RemoteAddr`.
     Out: os.Stdout, // Out is the destination to which the logged data will be written too. Default is `os.Stdout`.
     OutputFlags: log.Ldate | log.Ltime, // OutputFlags defines the logging properties. See http://golang.org/pkg/log/#pkg-constants. To disable all flags, set this to `-1`. Defaults to log.LstdFlags (2009/01/23 01:23:23).
 })
@@ -94,7 +94,7 @@ var myHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     loggerWithConfigMiddleware := logger.New(logger.Options{
-        RemoteAddressHeaders: []string{"X-Real-IP", "X-Forwarded-Proto"},
+        RemoteAddressHeaders: []string{"X-Real-IP", "X-Forwarded-For"},
     })
 
     app := loggerMiddleware.Handler(myHandler)
