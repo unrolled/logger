@@ -54,6 +54,7 @@ l := logger.New(logger.Options{
     RemoteAddressHeaders: []string{"X-Forwarded-For"}, // RemoteAddressHeaders is a list of header keys that Logger will look at to determine the proper remote address. Useful when using a proxy like Nginx: `[]string{"X-Forwarded-For"}`. Default is an empty slice, and thus will use `reqeust.RemoteAddr`.
     Out: os.Stdout, // Out is the destination to which the logged data will be written too. Default is `os.Stdout`.
     OutputFlags: log.Ldate | log.Ltime, // OutputFlags defines the logging properties. See http://golang.org/pkg/log/#pkg-constants. To disable all flags, set this to `-1`. Defaults to log.LstdFlags (2009/01/23 01:23:23).
+    IgnoredRequestURIs: []string{"/favicon.ico"}, // IgnoredRequestURIs is a list of path values we do not want logged out. Exact match only!
 })
 // ...
 ~~~
@@ -72,6 +73,7 @@ l := logger.New(logger.Options{
     RemoteAddressHeaders: []string{},
     Out: os.Stdout,
     OutputFlags log.LstdFlags,
+    IgnoredRequestURIs: []string{},
 })
 ~~~
 

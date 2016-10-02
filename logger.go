@@ -20,6 +20,8 @@ type Options struct {
 	Out io.Writer
 	// OutputFlags defines the logging properties. See http://golang.org/pkg/log/#pkg-constants. To disable all flags, set this to `-1`. Defaults to log.LstdFlags (2009/01/23 01:23:23).
 	OutputFlags int
+	// IgnoredRequestURIs is a list of path values we do not want logged out. Exact match only!
+	IgnoredRequestURIs []string
 }
 
 // Logger is a HTTP middleware handler that logs a request. Outputted information includes status, method, URL, remote address, size, and the time it took to process the request.
@@ -73,6 +75,12 @@ func (l *Logger) Handler(next http.Handler) http.Handler {
 
 		crw := newCustomResponseWriter(w)
 		next.ServeHTTP(crw, r)
+
+		for _, ignoredURI := range l.opt.IgnoredRequestURIs {
+			if ignoredURI == r.RequestURI {
+				return
+			}
+		}
 
 		addr := r.RemoteAddr
 		for _, headerKey := range l.opt.RemoteAddressHeaders {

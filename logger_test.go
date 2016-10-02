@@ -302,6 +302,38 @@ func TestIgnoreMultipleConfigs(t *testing.T) {
 	expectContainsTrue(t, buf.String(), curDate)
 }
 
+func TestIgnoredURIsNoMatch(t *testing.T) {
+	buf := bytes.NewBufferString("")
+
+	l := New(Options{
+		Out:                buf,
+		IgnoredRequestURIs: []string{"/favicon.ico"},
+	})
+
+	res := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/foo", nil)
+	l.Handler(myHandler).ServeHTTP(res, req)
+
+	expectContainsTrue(t, buf.String(), "200")
+	expectContainsTrue(t, buf.String(), "GET")
+}
+
+func TestIgnoredURIsMatchig(t *testing.T) {
+	buf := bytes.NewBufferString("")
+
+	l := New(Options{
+		Out:                buf,
+		IgnoredRequestURIs: []string{"/favicon.ico", "/foo"},
+	})
+
+	res := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/foo", nil)
+	req.RequestURI = "/foo"
+	l.Handler(myHandler).ServeHTTP(res, req)
+
+	expect(t, buf.String(), "")
+}
+
 /* Test Helpers */
 func expect(t *testing.T, a interface{}, b interface{}) {
 	if a != b {
