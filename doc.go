@@ -6,7 +6,7 @@
       "log"
       "net/http"
 
-      "github.com/unrolled/logger"  // or "gopkg.in/unrolled/logger.v1"
+      "github.com/unrolled/logger"
   )
 
   var myHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
