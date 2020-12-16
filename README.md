@@ -1,4 +1,4 @@
-# Logger [![GoDoc](https://godoc.org/github.com/unrolled/logger?status.svg)](http://godoc.org/github.com/unrolled/logger) [![Build Status](https://travis-ci.org/unrolled/logger.svg)](https://travis-ci.org/unrolled/logger)
+# Logger [![GoDoc](https://godoc.org/github.com/unrolled/logger?status.svg)](http://godoc.org/github.com/unrolled/logger) [![Test](https://github.com/unrolled/logger/workflows/Test/badge.svg)](https://github.com/unrolled/logger/actions)
 
 Logger is an HTTP middleware for Go that logs web requests to an io.Writer (the default being `os.Stdout`). It's a standard net/http [Handler](http://golang.org/pkg/net/http/#Handler), and can be used with many frameworks or directly with Go's net/http package.
 
@@ -48,7 +48,7 @@ Logger comes with a variety of configuration options (Note: these are not the de
 
 ~~~ go
 // ...
-l := logger.New(logger.Options{        
+l := logger.New(logger.Options{
     Prefix: "myApp", // Prefix is the outputted keyword in front of the log message. Logger automatically wraps the prefix in square brackets (ie. [myApp] ) unless the `DisableAutoBrackets` is set to true. A blank value will not have brackets added. Default is blank (with no brackets).
     DisableAutoBrackets: false, // DisableAutoBrackets if set to true, will remove the prefix and square brackets. Default is false.
     RemoteAddressHeaders: []string{"X-Forwarded-For"}, // RemoteAddressHeaders is a list of header keys that Logger will look at to determine the proper remote address. Useful when using a proxy like Nginx: `[]string{"X-Forwarded-For"}`. Default is an empty slice, and thus will use `reqeust.RemoteAddr`.
@@ -67,7 +67,7 @@ l := logger.New()
 
 // Is the same as the default configuration options:
 
-l := logger.New(logger.Options{        
+l := logger.New(logger.Options{
     Prefix: "",
     DisableAutoBrackets: false,
     RemoteAddressHeaders: []string{},
